@@ -9,9 +9,9 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import com.thoughtworks.assignment.main.ConversationMapper;
-import com.thoughtworks.assignment.main.MerchantGuide;
-import com.thoughtworks.assignment.main.RomanNumeralsCalculator;
+import com.thoughtworks.assignment.main.enums.RomanNumeralsCalculator;
+import com.thoughtworks.assignment.main.merchantguide.ConversationMapper;
+import com.thoughtworks.assignment.main.merchantguide.MerchantGuide;
 
 class TestMerchantsGuide {
 

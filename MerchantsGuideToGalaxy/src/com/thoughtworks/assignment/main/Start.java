@@ -3,14 +3,26 @@ package com.thoughtworks.assignment.main;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import com.thoughtworks.assignment.main.merchantguide.MerchantGuide;
+import com.thoughtworks.assignment.main.util.GeneralInputValidator;
+
 /**
+ * The Class Start.
+ *
  * @author bburli
- * Entry point for program.
+ * Entry point for program. This is a console input starting point.
  */
 
 public class Start {
+	
+	/** The Constant EXIT - to exit the program. **/
 	private static final String EXIT = "exit";
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Hello! Welcome to your guide to Intergalactic trade!\n");
@@ -48,7 +60,5 @@ public class Start {
 		} while(true);
 
 		scanner.close();
-	}
-
-	
+	}	
 }
