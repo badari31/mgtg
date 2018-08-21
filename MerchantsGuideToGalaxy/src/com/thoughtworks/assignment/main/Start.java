@@ -41,7 +41,10 @@ public class Start {
 			}
 			
 			String answer = mGuide.processQuery(query);
-			System.out.println("Query translation: "+answer+"\n");
+			if (answer != null && !answer.isEmpty())
+				System.out.println("Query translation: "+answer+"\n");
+			else
+				System.out.println("Query translation: Invalid query :( ");
 		} while(true);
 
 		scanner.close();

@@ -33,7 +33,7 @@ public enum RomanNumeralsCalculator {
 			
 			for (String eachSymbol : threeRepetitionSymbols) {
 				int index = romanNumeral.indexOf(eachSymbol);
-				if (index != -1 && ((index+2) < romanNumeral.length()-1)) {
+				if (index != -1 && ((index+2) <= romanNumeral.length()-1)) {
 					String subString = romanNumeral.substring(index, index + 4);
 					isConsecutive = subString.chars().distinct().count() == 1;
 					if (isConsecutive) {
@@ -46,7 +46,7 @@ public enum RomanNumeralsCalculator {
 			
 			for (String eachSymbol : noRepetitionSymbols) {
 				int index = romanNumeral.indexOf(eachSymbol);
-				if (index != -1 && ((index+1) < romanNumeral.length()-1)) {
+				if (index != -1 && ((index+1) <= romanNumeral.length()-1)) {
 					String subString = romanNumeral.substring(index, index + 2);
 					isConsecutive = subString.chars().distinct().count() == 1;
 					if (isConsecutive) {
