@@ -10,11 +10,29 @@ import java.util.Map;
  */
 public class ConversationMapper {
 	private List<String> conversations;
-	private Map<String, Integer> conversationComponentMap = new HashMap<String, Integer>();
+	private Map<String, String> simpleComponentMap = new HashMap<String, String>();
+	private Map<String, Integer> complexComponentMap = new HashMap<String, Integer>();
 
-	public int getValueFor(String componentName) {
-		if (this.conversationComponentMap.containsKey(componentName)) {
-			return this.conversationComponentMap.get(componentName);
+	public boolean isSimpleComponent(String componentName) {
+		return this.simpleComponentMap.containsKey(componentName);
+	}
+	
+	public boolean isComplexComponent(String componentName) {
+		return this.complexComponentMap.containsKey(componentName);
+	}
+	
+	public String getSimpleComponentValue(String componentName) {
+		if (this.simpleComponentMap.containsKey(componentName)) {
+			return this.simpleComponentMap.get(componentName);
+		} else {
+			System.out.println("Invalid component in Query!");
+			return null;
+		}
+	}
+	
+	public int getComplexComponentValue(String componentName) {
+		if (this.complexComponentMap.containsKey(componentName)) {
+			return this.complexComponentMap.get(componentName);
 		} else {
 			System.out.println("Invalid component in Query!");
 			return -1;
@@ -39,31 +57,29 @@ public class ConversationMapper {
 	 */
 	
 	private void processConversation(String[] wordsInConversation, boolean isSimpleConversation) {
-		String key = null;
-		int value = 0;
-
 		if (isSimpleConversation) {
+			String key = null;
+			String value = null;
+			
 			key = wordsInConversation[0].trim();
-			value = RomanNumerals.getRomanNumeralValue(wordsInConversation[2].trim());
-			
-			if (value == -1) {
-				System.out.println("Invalid conversation.\n");
-			}
-
-			this.conversationComponentMap.put(key, value);
+			value = wordsInConversation[2].trim();
+			this.simpleComponentMap.put(key, value);
 		} else {
-			Integer value1 = this.conversationComponentMap.get(wordsInConversation[0].trim());
-			Integer value2 = this.conversationComponentMap.get(wordsInConversation[1].trim());
+			String key = null;
+			Integer value = null;
 			
-			if (value1 == null || value2 == null) {
+			String value1 = this.simpleComponentMap.get(wordsInConversation[0].trim());
+			String value2 = this.simpleComponentMap.get(wordsInConversation[1].trim());
+			
+			if (!GeneralInputValidator.INSTANCE.isValidString(value1) || !GeneralInputValidator.INSTANCE.isValidString(value2)) {
 				System.out.println("Invalid conversation.\n");
 			}
 			
-			long sum = value1 + value2;
+			long sum = RomanNumerals.getArabicNumeralFor(value1) + RomanNumerals.getArabicNumeralFor(value2);
 			long totalPerInput = Integer.parseInt(wordsInConversation[4].trim());
 			key = wordsInConversation[2].trim();
 			value = (int) (totalPerInput / sum);
-			this.conversationComponentMap.put(key, value);
+			this.complexComponentMap.put(key, value);
 		}
 	}
 

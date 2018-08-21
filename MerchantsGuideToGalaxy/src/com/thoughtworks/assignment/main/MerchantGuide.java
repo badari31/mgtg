@@ -22,14 +22,23 @@ public class MerchantGuide {
 			String[] translatablePartComponents = translatablePart.split(" ");
 			if (translatablePartComponents != null && translatablePartComponents.length > 0) {
 				long sum = 0;
+				StringBuilder romanNumeralBuilder = new StringBuilder();
 				for (String eachComponent : translatablePartComponents) {
-					int value = this.conversationMapper.getValueFor(eachComponent);
-					if (value == -1) {
+					if (conversationMapper.isSimpleComponent(eachComponent)) {
+						romanNumeralBuilder.append(conversationMapper.getSimpleComponentValue(eachComponent));
+					} else if (conversationMapper.isComplexComponent(eachComponent)) {
+						// ASSUMPTION: Roman numerals are done. Multiple with existing roman numeral value for complex type.
+						sum = RomanNumeralsCalculator.convertRomanToArabic(romanNumeralBuilder.toString()) * 
+								conversationMapper.getComplexComponentValue(eachComponent);
+					} else {
 						answer.append("I have no idea what you're talking about.\n");
 						return answer.toString();
-					} else {
-						sum += value;
 					}
+				}
+				
+				if (sum == 0 && romanNumeralBuilder.length() > 0) {
+					// Only roman numerals; no special symbols like Silver, Gold etc.
+					sum = RomanNumeralsCalculator.convertRomanToArabic(romanNumeralBuilder.toString());
 				}
 				
 				if (sum > 0) {

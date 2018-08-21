@@ -1,96 +1,47 @@
 package com.thoughtworks.assignment.main;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.Comparator;
+import java.util.List;
 
-public class RomanNumerals {
+public enum RomanNumerals implements Comparator<RomanNumerals>{
 
-	private static Map<String, Integer> defaultMapping = new LinkedHashMap<String, Integer>();
-	private static final int MAX_ALLOWED_CONSECUTIVE_OCCURENCE = 3;
-
-	private static void initialize() {
-		defaultMapping.put("I", 1);
-		defaultMapping.put("V", 5);
-		defaultMapping.put("X", 10);
-		defaultMapping.put("L", 50);
-		defaultMapping.put("C", 100);
-		defaultMapping.put("D", 500);
-		defaultMapping.put("M", 1000);
+	I(1), V(5), X(10), L(50), C(100), D(500), M(1000);
+	
+	private int arabicNumeralValue;
+	
+	private RomanNumerals(int arabicNumeralValue) {
+		this.arabicNumeralValue = arabicNumeralValue;
 	}
 	
-	public static int getRomanNumeralValue(String key) {
-		if (defaultMapping.isEmpty())
-			initialize();
-		
-		if (defaultMapping.containsKey(key)) {
-			return defaultMapping.get(key);
-		} else {
-			return -1;
-		}
-	}
-
-	private boolean isValidRomanNumeral(String romanNumeral) {
-		boolean validRomanNumeral = true;
-
-		validRomanNumeral &= GeneralInputValidator.INSTANCE.isValidString(romanNumeral);
-		validRomanNumeral &= isConsecutiveRuleSatisfied(romanNumeral);
-		validRomanNumeral &= isSubtractionRuleSatisfied(romanNumeral);
-
-		return validRomanNumeral;
-	}
-
-	private boolean isSubtractionRuleSatisfied(String romanNumeral) {
-		if (romanNumeral.length() == 1)
-			return true;
-		
-		for (int i = 0 ; i < romanNumeral.length()-1 ; i++) {
-			char romanSymbol = romanNumeral.charAt(i);
-			char nextRomanSymbol = romanNumeral.charAt(i+1);
-			
-			if (romanSymbol == 'I' && (nextRomanSymbol == 'I' || nextRomanSymbol == 'V' || nextRomanSymbol == 'X')) {
-				return true;
-			} else if (romanSymbol == 'X' && (nextRomanSymbol == 'X' || nextRomanSymbol == 'L' || nextRomanSymbol == 'C')) {
-				return true;
-			} else if (romanSymbol == 'C' && (nextRomanSymbol == 'C' || nextRomanSymbol == 'D' || nextRomanSymbol == 'M')) {
-				return true;
-			} else if (romanSymbol == 'V' && (nextRomanSymbol == 'X' || nextRomanSymbol == 'C' || nextRomanSymbol == 'L' 
-					|| nextRomanSymbol == 'D' || nextRomanSymbol == 'M')) {
-				return false;
-			} else if (romanSymbol == 'L' && (nextRomanSymbol == 'C' || nextRomanSymbol == 'D' || nextRomanSymbol == 'M')) {
-				return false;
-			} else if (romanSymbol == 'D' && nextRomanSymbol == 'M') {
-				return false;
+	public static int getArabicNumeralFor(String romanChar) {
+		for (RomanNumerals eachRomanNumeral : values()) {
+			if (eachRomanNumeral.toString().equalsIgnoreCase(romanChar)) {
+				return eachRomanNumeral.getArabicNumeral();
 			}
-			
 		}
 		
-		return true;
+		return -1;
 	}
-
-	private boolean isConsecutiveRuleSatisfied(String romanNumeral) {
-		Set<String> applicableSymbols = Collections.<String>emptySet();
-		applicableSymbols.add("I");
-		applicableSymbols.add("X");
-		applicableSymbols.add("C");
-		applicableSymbols.add("M");
-
-		if (romanNumeral.length() <= MAX_ALLOWED_CONSECUTIVE_OCCURENCE)
-			return true;
-
-		boolean isConsecutive = true;
-
-		for (String eachApplicableSymbol : applicableSymbols) {
-			int index = romanNumeral.indexOf(eachApplicableSymbol);
-			String subString = romanNumeral.substring(index, index + 2);
-			isConsecutive = subString.chars().distinct().count() == 1;
-
-			if (isConsecutive)
-				return true;
+	
+	int getArabicNumeral() {
+		return this.arabicNumeralValue;
+	}
+	
+	public static List<RomanNumerals> getRomanNumerals() {
+		List<RomanNumerals> romanNumerals = new ArrayList<RomanNumerals>();
+		
+		for (RomanNumerals eachNumeral : values()) {
+			romanNumerals.add(eachNumeral);
 		}
-
-		return false;
+		
+		Collections.sort(romanNumerals);
+		return romanNumerals;
 	}
-
+	
+	@Override
+	public int compare(RomanNumerals o1, RomanNumerals o2) {
+		return Integer.compare(o1.arabicNumeralValue, o2.arabicNumeralValue);
+	}
 }
