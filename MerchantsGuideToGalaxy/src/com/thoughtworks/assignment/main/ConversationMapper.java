@@ -53,7 +53,8 @@ public class ConversationMapper {
 	}
 
 	/*
-	 * WARNING: This method assumes a rigid conversation structure. Ordering and content of conversation is assumed to be fixed.
+	 * WARNING: This method assumes a rigid conversation structure. 
+	 * Ordering and content of conversation is assumed to be fixed.
 	 */
 	
 	private void processConversation(String[] wordsInConversation, boolean isSimpleConversation) {
@@ -74,13 +75,14 @@ public class ConversationMapper {
 			String value2 = this.simpleComponentMap.get(wordsInConversation[1].trim());
 			
 			
-			if (!GeneralInputValidator.INSTANCE.isValidString(value1) || !GeneralInputValidator.INSTANCE.isValidString(value2)) {
+			if (!GeneralInputValidator.INSTANCE.isValidString(value1) 
+					|| !GeneralInputValidator.INSTANCE.isValidString(value2)) {
 				System.out.println("Invalid conversation.\n");
 			}
 			
 			romanNumeral.append(value1).append(value2);
 			
-			long sum = RomanNumeralsCalculator.convertRomanToArabic(romanNumeral.toString());
+			long sum = RomanNumeralsCalculator.INSTANCE.convertRomanToArabic(romanNumeral.toString());
 			long totalPerInput = Integer.parseInt(wordsInConversation[4].trim());
 			key = wordsInConversation[2].trim();
 			value = ((double) totalPerInput / (double) sum);

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public enum RomanNumerals implements Comparator<RomanNumerals>{
+public enum RomanNumerals implements Comparator<RomanNumerals> {
 
 	I(1), V(5), X(10), L(50), C(100), D(500), M(1000);
 	
@@ -13,16 +13,6 @@ public enum RomanNumerals implements Comparator<RomanNumerals>{
 	
 	private RomanNumerals(int arabicNumeralValue) {
 		this.arabicNumeralValue = arabicNumeralValue;
-	}
-	
-	public static int getArabicNumeralFor(String romanChar) {
-		for (RomanNumerals eachRomanNumeral : values()) {
-			if (eachRomanNumeral.toString().equalsIgnoreCase(romanChar)) {
-				return eachRomanNumeral.getArabicNumeral();
-			}
-		}
-		
-		return -1;
 	}
 	
 	int getArabicNumeral() {

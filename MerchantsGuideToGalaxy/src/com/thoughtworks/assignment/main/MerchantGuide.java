@@ -9,13 +9,19 @@ public class MerchantGuide {
 	private List<String> conversations;
 	private ConversationMapper conversationMapper = new ConversationMapper();
 	
-	
+	public void setConversationMapper(ConversationMapper conversationMapper) {
+		this.conversationMapper = conversationMapper;
+	}
+
 	/*
 	 * WARNING: This method assumes a structure to query. Structure is as below:
 	 *     1. Words that need translation start after 'is' and end at '?'.
 	 *     2. Every query has exactly one instance of tokens stated in point 1.
 	 */
 	public String processQuery(String query) {
+		
+		boolean includeCreditsInAnswer = query.toLowerCase().contains("Credits".toLowerCase());
+		
 		StringBuilder answer = new StringBuilder();
 		if (GeneralInputValidator.INSTANCE.isValidString(query)) {
 			String translatablePart = query.substring(query.indexOf("is")+3, query.indexOf("?"));
@@ -28,7 +34,7 @@ public class MerchantGuide {
 						romanNumeralBuilder.append(conversationMapper.getSimpleComponentValue(eachComponent));
 					} else if (conversationMapper.isComplexComponent(eachComponent)) {
 						// ASSUMPTION: Roman numerals are done. Multiple with existing roman numeral value for complex type.
-						sum = RomanNumeralsCalculator.convertRomanToArabic(romanNumeralBuilder.toString()) * 
+						sum = RomanNumeralsCalculator.INSTANCE.convertRomanToArabic(romanNumeralBuilder.toString()) * 
 								conversationMapper.getComplexComponentValue(eachComponent);
 					} else {
 						answer.append("I have no idea what you're talking about.\n");
@@ -38,7 +44,7 @@ public class MerchantGuide {
 				
 				if (sum == 0 && romanNumeralBuilder.length() > 0) {
 					// Only roman numerals; no special symbols like Silver, Gold etc.
-					sum = RomanNumeralsCalculator.convertRomanToArabic(romanNumeralBuilder.toString());
+					sum = RomanNumeralsCalculator.INSTANCE.convertRomanToArabic(romanNumeralBuilder.toString());
 				}
 				
 				if (sum > 0) {
@@ -50,6 +56,9 @@ public class MerchantGuide {
 					
 					answer.append("is ");
 					answer.append(sum);
+					
+					if (includeCreditsInAnswer)
+						answer.append(" Credits");
 				}
 			}
 		} else {
@@ -62,7 +71,7 @@ public class MerchantGuide {
 	
 
 	public void readConversations(int numOfConversations, Scanner scanner) {
-		if (GeneralInputValidator.INSTANCE.isValidNumOfConversations(numOfConversations)) {
+		if (GeneralInputValidator.INSTANCE.isValidInteger(numOfConversations)) {
 			this.conversations = new ArrayList<String>(numOfConversations);
 
 			for (int i = 0; i < numOfConversations;) {
