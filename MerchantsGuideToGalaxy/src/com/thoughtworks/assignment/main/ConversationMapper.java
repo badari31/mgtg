@@ -11,7 +11,7 @@ import java.util.Map;
 public class ConversationMapper {
 	private List<String> conversations;
 	private Map<String, String> simpleComponentMap = new HashMap<String, String>();
-	private Map<String, Integer> complexComponentMap = new HashMap<String, Integer>();
+	private Map<String, Double> complexComponentMap = new HashMap<String, Double>();
 
 	public boolean isSimpleComponent(String componentName) {
 		return this.simpleComponentMap.containsKey(componentName);
@@ -30,12 +30,12 @@ public class ConversationMapper {
 		}
 	}
 	
-	public int getComplexComponentValue(String componentName) {
+	public Double getComplexComponentValue(String componentName) {
 		if (this.complexComponentMap.containsKey(componentName)) {
 			return this.complexComponentMap.get(componentName);
 		} else {
 			System.out.println("Invalid component in Query!");
-			return -1;
+			return -1.0;
 		}
 	}
 
@@ -66,19 +66,24 @@ public class ConversationMapper {
 			this.simpleComponentMap.put(key, value);
 		} else {
 			String key = null;
-			Integer value = null;
+			double value = 0.0;
+			
+			StringBuilder romanNumeral = new StringBuilder();
 			
 			String value1 = this.simpleComponentMap.get(wordsInConversation[0].trim());
 			String value2 = this.simpleComponentMap.get(wordsInConversation[1].trim());
+			
 			
 			if (!GeneralInputValidator.INSTANCE.isValidString(value1) || !GeneralInputValidator.INSTANCE.isValidString(value2)) {
 				System.out.println("Invalid conversation.\n");
 			}
 			
-			long sum = RomanNumerals.getArabicNumeralFor(value1) + RomanNumerals.getArabicNumeralFor(value2);
+			romanNumeral.append(value1).append(value2);
+			
+			long sum = RomanNumeralsCalculator.convertRomanToArabic(romanNumeral.toString());
 			long totalPerInput = Integer.parseInt(wordsInConversation[4].trim());
 			key = wordsInConversation[2].trim();
-			value = (int) (totalPerInput / sum);
+			value = ((double) totalPerInput / (double) sum);
 			this.complexComponentMap.put(key, value);
 		}
 	}

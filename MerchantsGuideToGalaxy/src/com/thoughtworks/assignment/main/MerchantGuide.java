@@ -21,7 +21,7 @@ public class MerchantGuide {
 			String translatablePart = query.substring(query.indexOf("is")+3, query.indexOf("?"));
 			String[] translatablePartComponents = translatablePart.split(" ");
 			if (translatablePartComponents != null && translatablePartComponents.length > 0) {
-				long sum = 0;
+				double sum = 0;
 				StringBuilder romanNumeralBuilder = new StringBuilder();
 				for (String eachComponent : translatablePartComponents) {
 					if (conversationMapper.isSimpleComponent(eachComponent)) {
