@@ -14,12 +14,27 @@ import com.thoughtworks.assignment.main.util.GeneralInputValidator;
  * The central functionality of this class is around query processing.
  */
 public class MerchantGuide {
-
+	
 	/** The conversations. */
 	private List<String> conversations;
 	
 	/** The conversation mapper. */
 	private ConversationMapper conversationMapper = new ConversationMapper();
+	
+	/**
+	 * @return
+	 */
+	public List<String> getConversations() {
+		return conversations;
+	}
+
+	/**
+	 * @param conversations
+	 */
+	public void setConversations(List<String> conversations) {
+		this.conversations = conversations;
+		this.conversationMapper.setConversations(conversations);
+	}
 	
 	/**
 	 * Sets the conversation mapper.
@@ -71,15 +86,15 @@ public class MerchantGuide {
 								conversationMapper
 								.getComplexComponentValue(eachComponent);
 					} else {
-						answer.append("I have no idea what you're talking about.\n");
-						return answer.toString();
+						sum = -1;
+						break;
 					}
 				}
 				
 				if (sum == 0 && romanNumeralBuilder.length() > 0) {
 					// This is the case where only roman numerals are present; no special symbols like Silver, Gold etc.
 					sum = RomanNumeralsCalculator.INSTANCE.convertRomanToArabic(romanNumeralBuilder.toString());
-				}
+				} 
 				
 				if (sum > 0) {
 					
@@ -93,6 +108,8 @@ public class MerchantGuide {
 					
 					if (includeCreditsInAnswer)
 						answer.append(" Credits");
+				} else {
+					return noIdea();
 				}
 			}
 		} else {
@@ -103,6 +120,10 @@ public class MerchantGuide {
 	}
 
 	
+
+	private String noIdea() {
+		return "I have no idea what you're talking about.";
+	}
 
 	/**
 	 * Read conversations.
@@ -131,6 +152,13 @@ public class MerchantGuide {
 		}
 		
 		conversationMapper.setConversations(this.conversations);
-		conversationMapper.processConversations();
+		processConversations();
+	}
+	
+	/**
+	 * 
+	 */
+	public void processConversations() {
+		this.conversationMapper.processConversations();
 	}
 }

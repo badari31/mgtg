@@ -192,9 +192,7 @@ public enum RomanNumeralsCalculator {
 			}
 			
 			return sum;
-		} else {
-			System.out.println("Invalid roman numeral. Fails to satisfy one of the rules.");
-		}
+		} 
 		
 		return -1;
 	}

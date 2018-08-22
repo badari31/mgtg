@@ -122,7 +122,7 @@ public class ConversationMapper {
 				} else if (wordsInConversation.length > 3) {
 					processConversation(wordsInConversation, false);
 				} else {
-					System.out.println("Too short for a conversation! Won't be considered.");
+					System.out.println("Too short for a conversation! Won't be considered. Conversation is: "+eachConversation);
 				}
 			}
 		}

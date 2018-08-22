@@ -1,0 +1,40 @@
+Instructions
+-----------------------------------
+
+This program/assignment can be executed or verified using three methods as specified below:
+
+Method 1: Running from console.
+---------------------------------
+
+1. Import the package into any IDE.
+2. Run the program Start.java without any program arguments. 
+	2.a This will make the program assume interactive console mode. Follow instructions printed on console.
+	2.b Console reads number of conversations first followed by those many number of conversations.
+	2.c You can evaluate any number of valid queries on the console. Type 'exit' to exit the console mode. 
+
+Method 2: Running from an input text file.
+------------------------------------------
+
+1. Import the package into any IDE.
+2. Run the program Start.java with exactly one argument: absolute path to the input file. 
+	2.a: This will make program assume file input mode and it will print output without any intervention.
+	2.b: RESTRICTION: Note that input file should contain both conversations and queries. Queries should start with 'how' or 'what' and follow structure mentioned in section "Dependencies"
+	
+Method 3: Running the JUnit test
+---------------------------------
+
+1. Import the package into any IDE with JUnit plugin.
+2. Run the JUnit test suite TestMerchantsGuide.java. Modify queries and conversation in appropriate test methods as suitable.
+
+Dependencies
+------------
+
+1. In console mode, conversations are read first and then queries.
+2. In input file mode, conversations and queries can be in any order as long as queries start with 'how' or 'what'.
+3. All conversations should have the word 'is' to create value mapping.
+4. Simple conversations i.e. conversations providing direct mapping should have below structure:
+		<simple-key> is <value>
+5. Complex conversations i.e. conversations providing indirect value mapping must follow below structure:
+		<simple-key1> <simple-key2> <complex-key> is <value> credits.
+		
+Thank you!

@@ -51,7 +51,7 @@ class TestMerchantsGuide {
 	void testQuery2() {
 		MerchantGuide mGuide = initializeMerchantGuide();
 		String answer = mGuide.processQuery("how much wood could a woodchuck chuck if a woodchuck could chuck wood ?");
-		String expected = "I have no idea what you're talking about.\n";
+		String expected = "I have no idea what you're talking about.";
 		
 		assertEquals(expected, answer);
 	}

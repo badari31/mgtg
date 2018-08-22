@@ -1,9 +1,11 @@
 package com.thoughtworks.assignment.main;
 
+import java.io.File;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import com.thoughtworks.assignment.main.merchantguide.MerchantGuide;
+import com.thoughtworks.assignment.main.merchantguide.MerchantGuideInputData;
 import com.thoughtworks.assignment.main.util.GeneralInputValidator;
 
 /**
@@ -24,10 +26,30 @@ public class Start {
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
+		MerchantGuide mGuide = new MerchantGuide();
+		
+		if (args != null && args.length == 1) {
+			 // Run program using input file.
+			File input = new File(args[0].trim());
+			if (input.exists()) {
+				MerchantGuideInputData inputData = new MerchantGuideInputData();
+				inputData.readDataFromFile(input);
+				mGuide.setConversations(inputData.getConversations());
+				mGuide.processConversations();
+				
+				if (inputData.getQueries() != null && !inputData.getQueries().isEmpty()) {
+					inputData.getQueries().stream().forEach(query -> System.out.println(mGuide.processQuery(query)));
+				}
+				
+				return;
+			}
+		} else if (args.length > 1) {
+			System.out.println("Usage: Only one argument to be specified as full path of file containing input.");
+			return;
+		}
+		
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Hello! Welcome to your guide to Intergalactic trade!\n");
-
-		MerchantGuide mGuide = new MerchantGuide();
 		
 		System.out.println("Please enter the total number of conversation you have :\n");
 		
