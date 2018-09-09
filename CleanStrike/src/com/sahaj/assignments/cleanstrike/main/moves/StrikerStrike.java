@@ -10,6 +10,10 @@ public class StrikerStrike extends Move {
 		return Points.LOSE_SINGLE_POINT.value();
 	}
 	
+	public StrikerStrike() {
+		moveType = MoveTypes.STRIKER_STRIKE;
+	}
+	
 	@Override
 	public String toString() {
 		return MoveTypes.STRIKER_STRIKE.toString();

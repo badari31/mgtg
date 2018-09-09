@@ -10,6 +10,7 @@ public class MultiStrike extends Move {
 	
 	private MultiStrike(int noOfCointsPocketed) {
 		this.noOfCoinsPocketed = noOfCointsPocketed;
+		moveType = MoveTypes.MULTI_STRIKE;
 	}
 	
 	public static MultiStrike of(int noOfCoinsPocketed) {
@@ -20,11 +21,5 @@ public class MultiStrike extends Move {
 	public int executeMove() {
 		Coins.INSTANCE.pocketBlackCoins(this.noOfCoinsPocketed);
 		return Points.GAIN_TWO_POINTS.value();
-	}
-
-	
-	@Override
-	public String toString() {
-		return MoveTypes.MULTI_STRIKE.toString();
 	}
 }

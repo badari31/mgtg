@@ -26,7 +26,7 @@ public class Event  {
 	}
 
 	public void happens() {
-		this.player.setPoints(this.move.executeMove());
+		this.player.addPoints(this.move.executeMove());
 		GameDashboard.INSTANCE.addEvent(this);
 	}
 }

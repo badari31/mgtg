@@ -6,15 +6,14 @@ import com.sahaj.assignments.cleanstrike.main.vos.Points;
 
 public class RedStrike extends Move {
 
+	public RedStrike() {
+		moveType = MoveTypes.RED_STRIKE;
+	}
+	
 	@Override
 	public int executeMove() {
 		Coins.INSTANCE.pocketRedCoin();
 		return Points.GAIN_THREE_POINTS.value();
-	}
-	
-	@Override
-	public String toString() {
-		return MoveTypes.RED_STRIKE.toString();
 	}
 
 }

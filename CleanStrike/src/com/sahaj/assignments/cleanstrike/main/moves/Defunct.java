@@ -6,9 +6,8 @@ import com.sahaj.assignments.cleanstrike.main.vos.Points;
 
 public class Defunct extends Move {
 	
-	@Override
-	public String toString() {
-		return MoveTypes.DEFUNCT.toString();
+	public Defunct() {
+		this.moveType = MoveTypes.DEFUNCT;
 	}
 	
 	@Override
