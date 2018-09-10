@@ -51,4 +51,18 @@ public class Player {
 	public int getMiss() {
 		return miss;
 	}
+
+	public void reset() {
+		this.points = 0;
+		this.fouls = 0;
+		this.miss = 0;
+	}
+
+	public void resetFoulCounter() {
+		this.fouls = 0;		
+	}
+
+	public void resetMissCounter() {
+		this.miss = 0;
+	}
 }

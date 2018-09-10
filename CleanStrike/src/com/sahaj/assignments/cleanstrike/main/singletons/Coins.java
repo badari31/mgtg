@@ -30,9 +30,13 @@ public enum Coins {
 	}
 
 	public void loseBlackCoins(int noOfCointsLost) {
-		blackCoins += noOfCointsLost;
+		blackCoins -= noOfCointsLost;
 		System.out.println(noOfCointsLost+ " black coins lost.");
 	}
-	
-	
+
+	public void reset() {
+		blackCoins = 9;
+		redCoin = 1;
+	}
+
 }

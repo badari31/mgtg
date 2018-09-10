@@ -20,6 +20,6 @@ public class MultiStrike extends Move {
 	@Override
 	public int executeMove() {
 		Coins.INSTANCE.pocketBlackCoins(this.noOfCoinsPocketed);
-		return Points.GAIN_TWO_POINTS.value();
+		return this.noOfCoinsPocketed;
 	}
 }
