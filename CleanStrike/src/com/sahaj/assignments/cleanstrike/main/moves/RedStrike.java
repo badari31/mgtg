@@ -1,19 +1,28 @@
 package com.sahaj.assignments.cleanstrike.main.moves;
 
-import com.sahaj.assignments.cleanstrike.main.singletons.Coins;
+import com.sahaj.assignments.cleanstrike.main.game.Coins;
 import com.sahaj.assignments.cleanstrike.main.vos.MoveTypes;
-import com.sahaj.assignments.cleanstrike.main.vos.Points;
+
+/**
+ * 
+ * @author bburli
+ *
+ * Class RedStrike encapsulates the move where red coin is pocketed.
+ *
+ */
 
 public class RedStrike extends Move {
 
+	protected int pointsGainedByThisMove = 3;
+	
 	public RedStrike() {
 		moveType = MoveTypes.RED_STRIKE;
 	}
 	
 	@Override
-	public int executeMove() {
+	public int makeMove() {
 		Coins.INSTANCE.pocketRedCoin();
-		return Points.GAIN_THREE_POINTS.value();
+		return this.pointsGainedByThisMove;
 	}
 
 }

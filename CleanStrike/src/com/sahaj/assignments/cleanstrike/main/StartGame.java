@@ -1,11 +1,17 @@
 package com.sahaj.assignments.cleanstrike.main;
 
+import com.sahaj.assignments.cleanstrike.main.game.GameDashboard;
 import com.sahaj.assignments.cleanstrike.main.moves.Defunct;
 import com.sahaj.assignments.cleanstrike.main.moves.Move;
 import com.sahaj.assignments.cleanstrike.main.moves.MultiStrike;
-import com.sahaj.assignments.cleanstrike.main.singletons.GameDashboard;
 import com.sahaj.assignments.cleanstrike.main.vos.Event;
 import com.sahaj.assignments.cleanstrike.main.vos.Player;
+
+/**
+ * 
+ * @author bburli
+ * This is an optional class just to execute the flow.
+ */
 
 public class StartGame {
 

@@ -7,15 +7,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.sahaj.assignments.cleanstrike.main.game.GameDashboard;
+import com.sahaj.assignments.cleanstrike.main.game.GameProgressEvaluator;
 import com.sahaj.assignments.cleanstrike.main.moves.Defunct;
 import com.sahaj.assignments.cleanstrike.main.moves.Move;
 import com.sahaj.assignments.cleanstrike.main.moves.MultiStrike;
 import com.sahaj.assignments.cleanstrike.main.moves.RedStrike;
 import com.sahaj.assignments.cleanstrike.main.moves.Strike;
 import com.sahaj.assignments.cleanstrike.main.moves.StrikerStrike;
-import com.sahaj.assignments.cleanstrike.main.singletons.Coins;
-import com.sahaj.assignments.cleanstrike.main.singletons.GameDashboard;
-import com.sahaj.assignments.cleanstrike.main.singletons.GameProgress;
 import com.sahaj.assignments.cleanstrike.main.vos.Event;
 import com.sahaj.assignments.cleanstrike.main.vos.Player;
 
@@ -43,7 +42,7 @@ public class TestCleanStrike {
 		this.noMove = new Move() {
 			
 			@Override
-			public int executeMove() {
+			public int makeMove() {
 				return 0;
 			}
 		};
@@ -69,8 +68,8 @@ public class TestCleanStrike {
 		 
 		 assertEquals(2, this.playerA.getPoints());
 		 assertEquals(5, this.playerB.getPoints());
-		 assertEquals("WON", GameProgress.getGameStatus().toString());
-		 assertEquals("B", GameProgress.getWinner().getName());
+		 assertEquals("WON", GameProgressEvaluator.getGameStatus().toString());
+		 assertEquals("B", GameProgressEvaluator.getWinner().getName());
 	}
 	
 	@Test
@@ -86,8 +85,8 @@ public class TestCleanStrike {
 		 
 		 assertEquals(4, this.playerA.getPoints());
 		 assertEquals(4, this.playerB.getPoints());
-		 assertEquals("DRAWN", GameProgress.getGameStatus().toString());
-		 assertNull(GameProgress.getWinner());
+		 assertEquals("DRAWN", GameProgressEvaluator.getGameStatus().toString());
+		 assertNull(GameProgressEvaluator.getWinner());
 	}
 	
 	@Test
@@ -107,11 +106,9 @@ public class TestCleanStrike {
 		 Event.create(this.playerA, this.strike).happens();
 		 Event.create(this.playerB, this.noMove).happens();
 		 
-		 Coins.INSTANCE.getCurrentNoOfBlackCoins();
-		 
 		 assertEquals(6, this.playerA.getPoints());
 		 assertEquals(4, this.playerB.getPoints());
-		 assertEquals("DRAWN", GameProgress.getGameStatus().toString());
-		 assertNull(GameProgress.getWinner());
+		 assertEquals("DRAWN", GameProgressEvaluator.getGameStatus().toString());
+		 assertNull(GameProgressEvaluator.getWinner());
 	}
 }

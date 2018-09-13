@@ -1,12 +1,38 @@
-package com.sahaj.assignments.cleanstrike.main.singletons;
+package com.sahaj.assignments.cleanstrike.main.game;
 
 import com.sahaj.assignments.cleanstrike.main.vos.Event;
 import com.sahaj.assignments.cleanstrike.main.vos.Player;
 
-public class GameProgress {
+/**
+ * 
+ * @author bburli
+ * @see {@link GameStatus}
+ * 
+ * Class to evaluate the progress of the game after every event.
+ *
+ */
 
+public class GameProgressEvaluator {
+	
+	// Minimum points to be gained by any player to be declared win.
+	
+	private static final int MINIMUM_POINTS_TO_WIN = 5;
+	
+	// Minimum different between two players to declared one as won.
+	
+	private static final int MINIMUM_POINTS_DIFF_BETWEEN_PLAYERS = 3;
+
+	// GameStatus initially is INPROGRESS.
+	
 	private static GameStatus gameStatus = GameStatus.INPROGRESS;
+	
+	// There is no winner to being with so winner is initialized to null.
+	
 	private static Player winner = null;
+	
+	/**
+	 * Method to reset the progress of the game after game is over.
+	 */
 	
 	public static void reset() {
 		gameStatus = GameStatus.INPROGRESS;
@@ -21,9 +47,27 @@ public class GameProgress {
 		return gameStatus.toString();
 	}
 	
+	/**
+	 * 
+	 * @author bburli
+	 *
+	 *
+	 * Inner enum that enumerates various game states.
+	 */
+	
 	private enum GameStatus {
 		INPROGRESS, WON, DRAWN;
 	}
+	
+	/**
+	 * 
+	 * Method to process each event and evaulate against game rules. This does three thigs at the moment:
+	 * 1. Check if a foul is made.
+	 * 2. Check if a miss is made.
+	 * 3. Check if the game has ended in one way or another.
+	 * 
+	 * @param event denoting each event consisting of player and the move.
+	 */
 	
 	public static void evaluate(Event event) {
 		// Foul - player loses at least one point
@@ -62,19 +106,26 @@ public class GameProgress {
 		}	
 	}
 	
+	/**
+	 * 
+	 * Method to check if the game has been won or not.
+	 * 
+	 * @param players
+	 */
+	
 	private static void evaluateWin(Player[] players) {
 		final Player firstPlayer = players[0];
 		final Player secondPlayer = players[1];
 
 		int pointsDiff = (firstPlayer.getPoints() - secondPlayer.getPoints());
 
-		if (firstPlayer.getPoints() >= 5 && secondPlayer.getPoints() < 5) {
-			if (Math.abs(pointsDiff) >= 3 && pointsDiff > 0) {
+		if (firstPlayer.getPoints() >= MINIMUM_POINTS_TO_WIN && secondPlayer.getPoints() < MINIMUM_POINTS_TO_WIN) {
+			if (Math.abs(pointsDiff) >= MINIMUM_POINTS_DIFF_BETWEEN_PLAYERS && pointsDiff > 0) {
 				winner = firstPlayer;
 				gameStatus = GameStatus.WON;
 			}
-		} else if (secondPlayer.getPoints() >= 5 && firstPlayer.getPoints() < 5) {
-			if (Math.abs(pointsDiff) >= 3 && pointsDiff < 0) {
+		} else if (secondPlayer.getPoints() >= MINIMUM_POINTS_TO_WIN && firstPlayer.getPoints() < MINIMUM_POINTS_TO_WIN) {
+			if (Math.abs(pointsDiff) >= MINIMUM_POINTS_DIFF_BETWEEN_PLAYERS && pointsDiff < 0) {
 				winner = secondPlayer;
 				gameStatus = GameStatus.WON;
 			}

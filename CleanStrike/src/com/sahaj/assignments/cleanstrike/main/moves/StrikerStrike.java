@@ -1,13 +1,22 @@
 package com.sahaj.assignments.cleanstrike.main.moves;
 
 import com.sahaj.assignments.cleanstrike.main.vos.MoveTypes;
-import com.sahaj.assignments.cleanstrike.main.vos.Points;
+
+/**
+ * 
+ * @author bburli
+ *
+ * Class StrikerStrike encapsulates the move striker strike. A striker strike move costs players 1 point and 
+ * no coins are gained by it.
+ */
 
 public class StrikerStrike extends Move {
 
+	protected int coinsGainedByThisMove = -1;
+	
 	@Override
-	public int executeMove() {
-		return Points.LOSE_SINGLE_POINT.value();
+	public int makeMove() {
+		return this.coinsGainedByThisMove;
 	}
 	
 	public StrikerStrike() {
